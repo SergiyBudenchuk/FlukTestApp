@@ -22,16 +22,14 @@ namespace FlukeTestApp.Services
                 {OrderField.Title, x => x.Title}
             };
 
-
         public EventService(IDataProvider dataProvider)
         {
             _dataProvider = dataProvider;
         }
 
-        public async Task<List<Event>> GetFilteredAsync(int limit, string source, int days, OrderField field,
-            OrderType type)
+        public async Task<List<Event>> GetFilteredAsync(int limit, string source, int days, OrderField field, OrderType type)
         {
-            var data = await _dataProvider.Get(limit, source, days);
+            var data = await _dataProvider.GetAsync(limit, source, days);
 
             var result = type == OrderType.Asc
                 ? data.OrderBy(_orderingContainer[field])
@@ -42,7 +40,7 @@ namespace FlukeTestApp.Services
 
         public async Task<Event> GetByIdAsync(string id)
         {
-            var result = await _dataProvider.Get(id);
+            var result = await _dataProvider.GetAsync(id);
 
             return result;
         }

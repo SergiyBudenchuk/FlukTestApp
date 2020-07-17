@@ -27,7 +27,7 @@ namespace FlukeTestApp.DataProvider
             _baseUrl = config.GetSection(AppSettingEonetUrlKey).Value;
         }
 
-        public async Task<IEnumerable<Event>> Get(int limit = 20, string source = "", int days = 365)
+        public async Task<IEnumerable<Event>> GetAsync(int limit = 20, string source = "", int days = 365)
         {
             var client = _httpClient.CreateClient();
 
@@ -46,7 +46,7 @@ namespace FlukeTestApp.DataProvider
             return result;
         }
 
-        public async Task<Event> Get(string id)
+        public async Task<Event> GetAsync(string id)
         {
             var client = _httpClient.CreateClient();
 

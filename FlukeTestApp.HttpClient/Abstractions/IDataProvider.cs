@@ -7,7 +7,7 @@ namespace FlukeTestApp.DataProvider.Abstractions
 {
     public interface IDataProvider
     {
-        Task<IEnumerable<Event>> Get(int limit = 20, string source = "", int days = 365);
-        Task<Event> Get(string id);
+        Task<IEnumerable<Event>> GetAsync(int limit = 20, string source = "", int days = 365);
+        Task<Event> GetAsync(string id);
     }
 }
