@@ -15,24 +15,27 @@ namespace FlukeTestApp.ExceptionsFilter
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            var handledException = new ObjectResult(context.Exception.Message);
-
-            switch (context.Exception)
+            if (context.Exception != null)
             {
-                case ItemNotFoundException e:
-                {
-                    handledException.StatusCode = e.StatusCode;
-                    break;
-                }
-                default:
-                {
-                    handledException.StatusCode = DefaultErrorStatusCode;
-                    break;
-                }
-            }
+                var handledException = new ObjectResult(context.Exception.Message);
 
-            context.Result = handledException;
-            context.ExceptionHandled = true;
+                switch (context.Exception)
+                {
+                    case ItemNotFoundException e:
+                        {
+                            handledException.StatusCode = e.StatusCode;
+                            break;
+                        }
+                    default:
+                        {
+                            handledException.StatusCode = DefaultErrorStatusCode;
+                            break;
+                        }
+                }
+
+                context.Result = handledException;
+                context.ExceptionHandled = true;
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using AutoMapper;
 using FlukeTestApp.DataProvider.Configurations;
 using FlukeTestApp.ExceptionsFilter;
@@ -24,11 +25,14 @@ namespace FlukeTestApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest).AddJsonOptions(opts =>
+            {
+                opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
 
             services.AddHttpClient();
             services.AddRazorPages();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c => { c.UseInlineDefinitionsForEnums(); });
             services.AddAutoMapper(typeof(Startup));
 
             services.ConfigureServicesDependency();

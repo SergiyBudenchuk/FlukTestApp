@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using FlukeTestApp.DomainModels.Enums;
 using FlukeTestApp.DomainModels.Models;
 using FlukeTestApp.Models.Request;
 using FlukeTestApp.Services.Abstractions;
@@ -21,9 +22,12 @@ namespace FlukeTestApp.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Event>>> Get([FromQuery] EventsFilters filters)
         {
-            var result = await _eventService.GetFilteredAsync(filters?.Limit ?? 20,
-                                                                        filters?.Source ?? string.Empty,
-                                                                        filters?.Days ?? 365);
+            var result = await _eventService
+                .GetFilteredAsync(filters?.Limit ?? 20,
+                    filters?.Source ?? string.Empty,
+                    filters?.Days ?? 365,
+                    filters?.OrderField ?? OrderField.Id,
+                    filters?.OrderType ?? OrderType.Asc);
 
             return result;
         }
